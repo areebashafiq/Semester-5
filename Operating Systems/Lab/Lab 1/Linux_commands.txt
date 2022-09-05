@@ -1,0 +1,13 @@
+cd Desktop # to go to desktop
+pwd # gives path of current directory
+dir # gives directory
+mkdir lab_01 # to create a folder
+cd lab_01 # to go to a given directory
+
+# creating a file
+- we can either create a document (.cpp) from GUI interface or use terminal to create a file in a directory
+touch firstprogram.cpp # this will create file through command line
+
+# by default linux creates a.out file
+g++ firstprogram.cpp -o first.out
+./first.out # to run the program
