@@ -1,0 +1,149 @@
+Abdul Saboor
+20L-1113
+BDS-5A
+Homework-2
+
+-------------------------------------------------------------------------------------------------------
+
+// pseudocode implementation of question 1
+
+int kth(*arr1,*arr2,*n,*m,k)
+{
+    if (arr1==n)
+    {
+        return arr2[k]
+    }
+    if (arr2==m)
+    {
+        return arr1[k]
+    }
+    mid1=(n-arr1)/2
+    mid2=(m-arr2)/2
+    if (mid1 + mid2 < k)
+    {
+        if (arr1[mid1] > arr2[mid2])
+        {
+            return kth(arr1, arr2 + mid2 + 1, end1, end2, k - mid2 - 1)
+        }
+        else
+        {
+            return kth(arr1 + mid1 + 1, arr2, end1, end2, k - mid1 - 1)
+        }
+    }
+    else
+    {
+        if (arr1[mid1] > arr2[mid2])
+        {
+            return kth(arr1, arr2, arr1 + mid1, end2, k)
+        }
+        else
+        {
+            return kth(arr1, arr2, end1, arr2 + mid2, k)
+        }
+    }
+}
+
+-------------------------------------------------------------------------------------------------------
+// pseudocode implementation for question 2 (a)
+
+Idea:
+- Sort the array in nlg(n) time
+- starting from second, compare with previous element, if equal then increase count
+- if not equal then reset count to 1
+- once count is greater than n/2, return that particular element
+- null is returned if not found
+
+major(arr)
+{
+    // sort the array using quicksort (nlgn inplace algorithm)
+    // assuming array index start from 0
+    len=arr.length()
+    count=1
+    for(i:1 to len)
+    {
+        if(arr[i]==arr[i-1])
+        {
+            count++
+            if(count > len/2)
+            {
+                return arr[i]
+            }
+        }
+        else
+        {
+            count=1
+        }
+        return NULL
+    }
+}
+
+// pseudocode implementation for part (b)
+
+Idea:
+- split array into pair of two in recurrence and do till two elements are left
+- now if both are equal, return that element, else return null
+- if major element is present than it will occur in both halves
+- if same elements are obtained in last call return than that is major element
+
+// assuming array index start from 0
+major(arr,s,e)
+{
+    if(e-s == 1) // base case
+    {
+        if(arr[s]==arr[e])
+        {
+            return arr[s]
+        }
+        else
+        {
+            return NULL
+        }
+    }
+    m=(s+e)/2
+    left=major(arr,s,m)
+    right(arr,m+1,e)
+    if(left==right)
+    {
+        return left
+    }
+    return NULL
+}
+
+-------------------------------------------------------------------------------------------------------
+// pseudocode implementation of question 4
+
+// create an array of len
+// traverse and mark in second array (use constant time function to convert binary to decimal)
+// traverse second array to find missing
+// generate the missing number using a constant time function
+
+// assuming array index starts from 1
+string func(arr)
+{
+    len=arr.length()
+
+    int temp[len+1] // temporary array of len+1 to mark all occuring elements
+    for (i: 1 to len+1)
+    {
+        temp[i]=0 # marking all elements with zero
+    }
+    
+    // loop to iterate and mark elements
+    for(i:1 to len)
+    {
+        num=convert2decimal(arr[i]) 
+        // convert2decimal is a constant time function that converts given string to decimal number
+        
+        temp[num]=1
+    }
+
+    // loop for finding missing number in temp array
+    for(i:1 to len+1)
+    {
+        if(temp[i]==0):
+        {
+            return convert2binary(i) 
+            // convert2binary is a constant time function that converts a given number to binary string
+        }
+    }
+}

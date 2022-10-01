@@ -1,0 +1,37 @@
+// pseudocode implementation of question 4
+
+// create an array of len
+// traverse and mark in second array (use constant time function to convert binary to decimal)
+// traverse second array to find missing
+// generate the missing number using a constant time function
+
+
+string func(arr)
+{
+    len=arr.length()
+
+    int temp[len+1] // temporary array of len+1 to mark all occuring elements
+    for (i: 1 to len+1)
+    {
+        temp[i]=0 # marking all elements with zero
+    }
+    
+    // loop to iterate and mark elements
+    for(i:1 to len)
+    {
+        num=convert2decimal(arr[i]) 
+        // convert2decimal is a constant time function that converts given string to decimal number
+        
+        temp[num]=1
+    }
+
+    // loop for finding missing number in temp array
+    for(i:1 to len+1)
+    {
+        if(temp[i]==0):
+        {
+            return convert2binary(i) 
+            // convert2binary is a constant time function that converts a given number to binary string
+        }
+    }
+}

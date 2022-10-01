@@ -1,0 +1,100 @@
+# these are notes for operating systems
+
+# process states
+- new
+- ready (when gets admitted, an interrupt occurs, an I/O operation completes)
+- running (when scheduler dispatches)
+- waiting (when an I/o operation is required)
+- terminated (when it is completed)
+
+Direct Memory Access (DMA) allows device drivers to directly access memory and saving cpu cycles
+
+--------------------------------------------
+
+Process Control Block (PCB)
+
+This is a data structure for storing information about all the processes, kept as linked lists in short and long term schedulers
+PCB contains
+- process ID (unique for each process)
+- program counter
+- pointer
+- priority
+- CPU registers
+- CPU scheduling information
+- Memory management information
+- Accounting information
+- I/O status information
+
+process is as following
+- text
+- data
+- heap
+- stack
+
+--------------------------------------------
+Queues and Schedulers
+
+Job Queue
+    All new jobs to the system are kept in this queue. This mainly resides in the disk
+
+Ready Queue
+     The processes that are ready in memory and require processor's attention. This is in the memory.
+     Any interrupted process is placed at the end.
+    
+I/O queue
+    every I/O device has its own queue
+
+----------
+Short-term scheduler or dispatcher
+    Selects from ready queue and allocates CPU to them
+
+Long-term scheduler or job scheduler
+    Selects from job queue and places in ready queue
+
+Meduium-term scheduler
+     This may be introduced in some time sharing systems to swap out programsadn manage system load
+
+-----------
+Dispatcher (Context Switch)
+    One important thing done by dispatcher is saving the state of programs. So before a process is loaded into CPU, the state
+    of current process is stored in its PCB, the PCB of new process is loaded into processor and of it goes.
+
+Job Scheduler
+    It is the job of job scheduler to select a good mix of CPU and I/O intensive processes for maximum system efficiency
+
+-----------------------------------------------------------------------------------------------------------------------
+
+System call
+    This is one of the entry point to the system, most of the services here are the assembly language instructions that allow to
+    manipulate system resources.
+
+How a system call is made
+    user calls library function that does the following
+    - puts parameters in well known place, which may be
+        - pass parameters in registers
+        - place in a table and pass pointer
+        - place on stack
+    These parameters contain following
+    - call number
+    - return address
+    - arguments
+
+    now a trap is generated which changes processor mode to kernel mode. kernel table (dispatch table) is indexed for service code
+    to see which call needs to be executed. system call returns the parameters as a trap, control is also given back to user 
+    program as a trap this also changes mode to user mode.
+    now library function completes execution following the trap.
+
+-------------------------------------------------------------------------------------------------------------------
+Process Creation
+
+We use a fork call to create child processes. This duplicates address space of process in child and both continue normal execution. 
+The Fork system call return child process id for parent and 0 in case of children. A failed fork call return -1
+Now parent and child can continue to execute, anyone can replace their code, parent can wait in ready queue for child to complete processing.
+
+Upon exit of a child all resources are destroyed except the entry in file descriptor table, this constatnly sends sigchild command.
+When ignored child is a zombie process. If parent terminates then child is orphaned and inherited by init (grandparent), which periodically
+calls wait and terminates.
+
+int status;
+PID = wait(&status);
+passing an integer as reference gives the exit status of child process multiplied by 256

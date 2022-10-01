@@ -1,0 +1,23 @@
+Operating Systems Pipes notes
+
+making command line output, an input for next command through pipes
+
+grep command for seraching for a text in file along with all arguments
+
+cat command
+
+sort command that sorts all the lines ascii wise
+
+we will connect multiple commands by using pypes
+
+    sort index.txt | grep foo
+
+Input Redirection
+    command o< filename
+    cat o< index.txt
+
+Output Redirection
+    command 1> filename
+
+Error Redirection
+    command 2> filename // this is to store filename
