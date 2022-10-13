@@ -4,6 +4,10 @@
         "string": "cpp",
         "iosfwd": "cpp",
         "ostream": "cpp",
-        "filesystem": "cpp"
+        "filesystem": "cpp",
+        "istream": "cpp",
+        "__locale": "cpp",
+        "__string": "cpp",
+        "string_view": "cpp"
     }
 }
