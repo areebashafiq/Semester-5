@@ -7,6 +7,7 @@ BDS-5A1
 #include <iostream>
 #include <unistd.h>
 #include <sys/wait.h>
+#include <cstring>
 #include <fstream>
 
 #define READ_END 0
