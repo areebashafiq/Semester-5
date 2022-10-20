@@ -35,6 +35,7 @@ int main()
         }
         cout << "Average of numbers is: " << avg / array_size << endl;
         close(pipefd[READ_END]);
+        exit(0);
     }
     else if (pid > 0)
     {
