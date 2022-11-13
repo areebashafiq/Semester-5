@@ -9,6 +9,8 @@
         "__locale": "cpp",
         "__string": "cpp",
         "string_view": "cpp",
-        "__tuple": "cpp"
+        "__tuple": "cpp",
+        "__threading_support": "c",
+        "thread": "c"
     }
 }

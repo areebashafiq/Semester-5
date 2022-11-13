@@ -1,39 +1,74 @@
-// file to show use of thread and thread join
+// This file creates a simple thread
 
 #include <iostream>
 #include <thread>
-#include <chrono>
-#include <mutex>
+#include <fstream>
+#include <string>
 #include <vector>
-#include <algorithm>
-#include <numeric>
-#include <functional>
 
 using namespace std;
 
-// function to print the thread id
-void print_id(int id)
+void *threadFunction(void *arg)
 {
-    this_thread::sleep_for(chrono::milliseconds(100));
-    cout << "ID = " << id << endl;
+    // printing argument
+    cout << "File name: " << (char *)arg << endl;
+    ifstream file;
+    file.open((char *)arg, ios::in);
+    if (!file)
+    {
+        cout << "Error opening file" << endl;
+        exit(1);
+    }
+
+    // creating vector to store numbers
+    vector<int> numbers;
+
+    // reading a line from file
+    string line;
+    while (getline(file, line))
+    {
+        // checking if first character is - sign
+        if (line[0] != '-')
+        {
+            // converting string to integer
+            int num = stoi(line);
+            // storing in vector if unique
+            if (find(numbers.begin(), numbers.end(), num) == numbers.end())
+            {
+                numbers.push_back(num);
+            }
+        }
+    }
+    file.close();
+
+    // converting vector to dynamic integer array
+    int *arr = new int[numbers.size()];
+    for (int i = 0; i < numbers.size(); i++)
+    {
+        arr[i] = numbers[i];
+    }
+
+    // returning vector by pthread_exit
+    pthread_exit((void *)arr);
 }
 
+// using pthread_create
 int main()
 {
-    // create a vector to hold the threads
-    vector<thread> threads;
+    pthread_t thread1;
+    char *message1 = "f1.txt";
+    pthread_create(&thread1, NULL, *threadFunction, message1);
+    void *ret;
+    pthread_join(thread1, &ret);
+    int *arr = (int *)ret;
 
-    // launch 10 threads
-    for (int i = 0; i < 10; ++i)
+    // printing array by for loop
+    int sum = 0;
+    int i = 0;
+    for (i = 0; arr[i] != 0; i++)
     {
-        threads.push_back(thread(print_id, i));
+        sum += arr[i];
     }
-
-    // join the threads with the main thread
-    for (auto &th : threads)
-    {
-        th.join();
-    }
-
+    cout << "Average of numbers: " << sum / i << endl;
     return 0;
 }

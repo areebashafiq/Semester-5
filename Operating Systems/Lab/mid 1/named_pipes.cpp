@@ -24,7 +24,7 @@ int main()
     char *myfifo = "/tmp/myfifo";
     char buf[80];
     mkfifo(myfifo, 0666);
-    fd = open(myfifo, O_WRONLY);
+    fd = open(myfifo, O_CREAT | O_WRONLY);
     write(fd, "Hi", sizeof("Hi"));
     close(fd);
     fd = open(myfifo, O_RDONLY);
