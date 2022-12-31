@@ -1,0 +1,12 @@
+total 248
+drwxr-xr-x  11 carbon  staff    352 Nov 21 14:38 .
+drwxr-xr-x@ 17 carbon  staff    544 Nov 16 12:10 ..
+-rwxr-xr-x   1 carbon  staff  86130 Nov 21 14:34 a.out
+-rw-r--r--   1 carbon  staff    927 Nov  5 20:15 grep.cpp
+-rw-r--r--   1 carbon  staff   3279 Nov  4 00:58 history.cpp
+-rw-r--r--@  1 carbon  staff   1593 Nov  3 23:45 input.cpp
+-rw-r--r--   1 carbon  staff      0 Nov 21 14:38 out.txt
+-rw-r--r--   1 carbon  staff   5359 Nov  5 14:24 redir.cpp
+-rw-r--r--@  1 carbon  staff   7224 Nov 20 14:50 shell.cpp
+-rw-r--r--@  1 carbon  staff   1725 Nov 15 20:40 split.cpp
+-rw-r--r--   1 carbon  staff     60 Nov  3 23:36 test.txt

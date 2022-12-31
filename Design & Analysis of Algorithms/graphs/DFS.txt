@@ -1,0 +1,64 @@
+This file contains implementation of different flavors of the DFS algorithm.
+
+Like BFS, we will add some parameters to the DFS function to make it more flexible.
+- color
+- distance
+- parent
+- finish_time
+- start_time
+
+-------------------------------------------------------------------------------
+
+DFS(graph):
+{
+    // create distance array
+    dist[1...n] = {INF, INF, ..., INF}
+
+    // create color array
+    color[1...n] = {WHITE, WHITE, ..., WHITE}
+
+    // create start_time array
+    start_time[1...n] = {INF, INF, ..., INF}
+
+    // create finish_time array
+    finish_time[1...n] = {INF, INF, ..., INF}
+
+    // create parent array
+    parent[1...n] = {NIL, NIL, ..., NIL}
+
+    // we are essentially using the recursion's call stack to keep track of the visiting order
+
+    // variable to keep track of the time
+    time = 0
+
+    // calling the DFS helper function for each vertex
+    for each vertex v in graph:
+    {
+        if color[v] == WHITE:
+        {
+            DFS_VISIT(graph, v)
+        }
+    }
+}
+
+DFS_VISIT(graph, v)
+{
+    color[v] = GRAY
+    start_time[v] = time++
+
+    for each vertex u in graph.adj[v]:
+    {
+        if color[u] == WHITE:
+        {
+            parent[u] = v
+            DFS_VISIT(graph, u)
+        }
+    }
+    color[v] = BLACK
+    end_time[v] = time++
+}
+
+-------------------------------------------------------------------------------
+
+Now if we simply print in DFS when turning a node black, we will get the reverse of the topological sort.
+Or we can create a stack and push the node when it turns black. Then we can pop the stack to get the topological sort.

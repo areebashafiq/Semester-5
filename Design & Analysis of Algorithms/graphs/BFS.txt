@@ -1,0 +1,216 @@
+Here are some pseudocode implementations of different BFS algorithms:
+
+A simple BFS algorithm
+
+BFS(Graph, source):
+{
+    // create a queue Q
+    Q.enqueue(source)
+
+    // create a distance array
+    dist[1...n] = {INF, INF, ..., INF}
+
+    // mark source as 0
+    dist[source] = 0
+
+    // now the real BFS algorithm till Q is not empty
+    while Q is not empty:
+    {
+        // get the first element in the queue
+        u = Q.dequeue()
+
+        // for each neighbor v of u
+        for each v in Graph.neighbors(u):
+        {
+            // if v is not visited yet
+            if dist[v] == INF:
+            {
+                // mark it as visited
+                dist[v] = dist[u] + 1 // this change gives us the distance from the source
+
+                // add it to the queue
+                Q.enqueue(v)
+            }
+        }
+    }
+}
+
+----------------------------------------------
+
+Now if we want to check connectedness of graph, the only thing we need to do is to check the distance array, if there is an INF value, then the graph is not connected.
+
+To change this algorithm for disconnected graphs:
+
+disconnected_bfs(Graph):
+{
+    // create a distance array
+    dist[1...n] = {INF, INF, ..., INF}
+
+    // for each node in the graph
+    for each node in Graph:
+    {
+        // if the node is not visited yet
+        if dist[node] == INF:
+        {
+            // run the BFS algorithm
+            BFS(Graph, node)
+        }
+    }
+}
+
+----------------------------------------------
+
+Finding connected components:
+- label each node 0
+- c=1
+- for each non visited node
+    - run BFS
+    - label all nodes with c
+    - c++
+
+----------------------------------------------
+
+Now, A BFS algorithm with colors
+
+BFS(Graph, source):
+{
+    // create a queue Q
+    Q.enqueue(source)
+
+    // create a distance array
+    dist[1...n] = {INF, INF, ..., INF}
+
+    // create a color array
+    color[1...n] = {WHITE, WHITE, ..., WHITE}
+
+    dist[source] = 0
+
+    // now the real BFS algorithm till Q is not empty
+    while Q is not empty:
+    {
+        // get the first element in the queue
+        u = Q.dequeue()
+
+        // mark u as black
+        color[u] = BLACK
+
+        // for each neighbor v of u
+        for each v in Graph.neighbors(u):
+        {
+            // if v is not visited yet
+            if color[v] == WHITE:
+            {
+                // mark it as visited
+                color[v] = GRAY
+                dist[v] = dist[u] + 1
+
+                // add it to the queue
+                Q.enqueue(v)
+            }
+        }
+    }
+}
+
+----------------------------------------------
+
+Now, using this algorithm for cycle detection:
+- if we find a gray node, then there is a cycle
+
+cycle_detection_BFS(Graph, source):
+{
+    // create a queue Q
+    Q.enqueue(source)
+
+    // create a distance array
+    dist[1...n] = {INF, INF, ..., INF}
+
+    // create a color array
+    color[1...n] = {WHITE, WHITE, ..., WHITE}
+
+    dist[source] = 0
+
+    // now the real BFS algorithm till Q is not empty
+    while Q is not empty:
+    {
+        // get the first element in the queue
+        u = Q.dequeue()
+
+        // mark u as black
+        color[u] = BLACK
+
+        // for each neighbor v of u
+        for each v in Graph.neighbors(u):
+        {
+            // if a gray node is found, then there is a cycle
+            if color[v] == GRAY:
+            {
+                return true
+            }
+            // if v is not visited yet
+            if color[v] == WHITE:
+            {
+                // mark it as visited
+                color[v] = GRAY
+                dist[v] = dist[u] + 1
+
+                // add it to the queue
+                Q.enqueue(v)
+            }
+        }
+    }
+    return false
+}
+
+----------------------------------------------
+
+Finding the shortest path between two nodes:
+
+shortest_path(Graph, source, destination):
+{
+    // create a queue Q
+    Q.enqueue(source)
+
+    // create a distance array
+    dist[1...n] = {INF, INF, ..., INF}
+
+    // create a color array
+    color[1...n] = {WHITE, WHITE, ..., WHITE}
+
+    // create a parent array
+    parent[1...n] = {NIL, NIL, ..., NIL}
+
+    dist[source] = 0
+
+    // now the real BFS algorithm till Q is not empty
+    while Q is not empty:
+    {
+        // get the first element in the queue
+        u = Q.dequeue()
+
+        // mark u as black
+        color[u] = BLACK
+
+        // for each neighbor v of u
+        for each v in Graph.neighbors(u):
+        {
+            // if v is not visited yet
+            if color[v] == WHITE:
+            {
+                // mark it as visited
+                color[v] = GRAY
+                dist[v] = dist[u] + 1
+                parent[v] = u
+
+                // add it to the queue
+                Q.enqueue(v)
+            }
+        }
+    }
+
+    // now we have the shortest path
+    // we need to print it
+    if dist[destination] != INF:
+    {
+        print_path(parent, destination)
+    }
+}

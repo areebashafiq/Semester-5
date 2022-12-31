@@ -1,0 +1,10 @@
+a.out
+grep.cpp
+history.cpp
+input.cpp
+my_file.txt
+out.txt
+redir.cpp
+shell.cpp
+split.cpp
+test.txt
